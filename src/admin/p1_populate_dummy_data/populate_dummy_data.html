@@ -1,0 +1,60 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_urls %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <section id="content" class="content">
+            <div class="row">
+                <div class="content border-bottom mb-2">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+                                <h1 class="h4 m-0 pr-3 mr-3 border-right"> {{ opts.verbose_name_plural|capfirst }} </h1>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a></li>
+                                </ol>
+                            </div>
+                            <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <span style="color: red; font-weight: bold; font-size: 20px;">
+                    {% trans 'Caution: Generating dummy data in a production environment can lead to irreversible changes and potential harm to your data integrity. Please ensure you are in a safe, non-production environment before proceeding.' %}
+                </span>
+            </div>
+            <div class="row">
+                <div id="content-main" class="col-12">
+                    <form enctype="multipart/form-data" action="" method="post" id="award_form" novalidate="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 col-lg-9">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {% for fieldset in adminform %}
+                                            {% include "admin/includes/fieldset.html" %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div id="jazzy-actions" class="">
+                                    <div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Save" class="btn btn-success form-control" name="_save">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
